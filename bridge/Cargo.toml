@@ -1,0 +1,15 @@
+# Mode A bridge: projects Telltale ActionFindings into AnalysisInputV1 using
+# only telltale-core's public embedding API. Expects a sibling Telltale
+# checkout at ../../telltale. Standalone so the analyzer builds without it.
+[package]
+name = "telltale-analysis-input"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+publish = false
+
+[workspace]
+
+[dependencies]
+telltale-core = { path = "../../telltale/crates/telltale" }
+serde_json = "1.0"
