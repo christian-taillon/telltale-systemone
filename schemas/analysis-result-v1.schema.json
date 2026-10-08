@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:telltale-systemone:schema:analysis-result-v1",
+  "title": "telltale.analysis-result.v1",
+  "description": "Analyzer results for one subject observation. Draft: proposed by telltale-systemone, not yet accepted by Telltale. Structural only; the host must also apply the semantic checks in docs/telltale-host.md (declared detectors, outcomes, observation membership).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "subject_observation_id", "analyzer", "results", "usage"],
+  "properties": {
+    "schema": { "const": "telltale.analysis-result.v1" },
+    "subject_observation_id": { "$ref": "#/$defs/observation_id" },
+    "analyzer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "engine", "content_ref", "semantics_version"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "version": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "engine": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "content_ref": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "semantics_version": { "type": "integer", "minimum": 1 },
+        "answered_model": { "type": "string", "minLength": 1, "maxLength": 96 }
+      }
+    },
+    "results": {
+      "type": "array",
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/result" }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requests", "input_tokens", "output_tokens"],
+      "properties": {
+        "requests": { "type": "integer", "minimum": 0 },
+        "input_tokens": { "type": "integer", "minimum": 0 },
+        "output_tokens": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "observation_id": { "type": "string", "pattern": "^obs:v2:sha256:[0-9a-f]{64}$" },
+    "identifier": { "type": "string", "pattern": "^[a-z0-9._-]{1,96}$" },
+    "unit": { "type": "number", "minimum": 0, "maximum": 1 },
+    "distribution": { "type": "object", "additionalProperties": { "$ref": "#/$defs/unit" } },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["detector_id", "detector_version", "status", "observation_ids", "finding_kind", "category", "severity"],
+      "properties": {
+        "detector_id": { "$ref": "#/$defs/identifier" },
+        "detector_version": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "status": { "enum": ["evaluated_match", "evaluated_no_match", "not_applicable", "not_evaluated", "detector_error"] },
+        "non_evaluation_reason": {
+          "enum": ["insufficient_visibility", "required_capability_unsupported", "required_capability_unknown", "missing_ordering_field", "missing_correlation_key", "type_mismatch", "ineligible_input"]
+        },
+        "observation_ids": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/observation_id" } },
+        "finding_kind": {
+          "enum": ["security_detection", "policy_violation", "behavioral_deviation", "guardrail", "compliance_observation", "threat_hunt", "informational"]
+        },
+        "category": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "severity": { "enum": ["informational", "low", "medium", "high", "critical"] },
+        "risk_points": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "confidence": { "enum": ["low", "medium", "high"] },
+        "confidence_score": { "$ref": "#/$defs/unit" },
+        "tags": { "type": "array", "maxItems": 32, "items": { "$ref": "#/$defs/identifier" } },
+        "techniques": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "type": "string", "pattern": "^(attack|atlas):[A-Za-z0-9._-]+$", "maxLength": 96 }
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "type": "string", "pattern": "^classification:[A-Za-z0-9._:+-]+$", "maxLength": 96 }
+        },
+        "dedupe_key": { "type": "string", "pattern": "^[^\\s/\\\\]{1,96}$" },
+        "diagnostic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "code"],
+          "properties": {
+            "kind": { "enum": ["runtime_detector_error", "malformed_content_or_package", "unavailable_capability"] },
+            "code": { "$ref": "#/$defs/identifier" }
+          }
+        },
+        "assessment": {
+          "description": "Model output behind the decision. Inferred, never an observed fact.",
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["primitive", "probability"],
+              "properties": { "primitive": { "const": "predicate" }, "probability": { "$ref": "#/$defs/unit" } }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["primitive", "choice", "probabilities", "confidence"],
+              "properties": {
+                "primitive": { "const": "choice" },
+                "choice": { "type": "string" },
+                "probabilities": { "$ref": "#/$defs/distribution" },
+                "confidence": { "$ref": "#/$defs/unit" },
+                "order_check": { "enum": ["consistent", "inconsistent"] }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["primitive", "score", "probabilities", "confidence"],
+              "properties": {
+                "primitive": { "const": "score" },
+                "score": { "type": "number", "minimum": 0 },
+                "probabilities": { "$ref": "#/$defs/distribution" },
+                "confidence": { "$ref": "#/$defs/unit" }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "not_evaluated" } } },
+          "then": { "required": ["non_evaluation_reason"] },
+          "else": { "not": { "required": ["non_evaluation_reason"] } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "evaluated_match" } } },
+          "then": { "required": ["risk_points"], "properties": { "observation_ids": { "minItems": 1 } } },
+          "else": { "not": { "required": ["risk_points"] } }
+        },
+        {
+          "if": { "properties": { "status": { "const": "detector_error" } } },
+          "then": { "required": ["diagnostic"] }
+        }
+      ]
+    }
+  }
+}

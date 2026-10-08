@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:telltale-systemone:schema:analysis-input-v1",
+  "title": "telltale.analysis-input.v1",
+  "description": "Privacy-bounded projection of one Telltale observation for an analyzer.v1 extension. Draft: proposed by telltale-systemone, not yet accepted by Telltale. Byte bounds (4096 per fact, 512 per context text, 65536 total text) are enforced by the receiver.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "subject", "visibility"],
+  "properties": {
+    "schema": { "const": "telltale.analysis-input.v1" },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "family", "stage"],
+      "properties": {
+        "observation_id": { "$ref": "#/$defs/observation_id" },
+        "family": {
+          "enum": ["message", "inference", "tool", "tool_definition", "mcp", "process", "file", "network", "browser", "runtime", "session", "other"]
+        },
+        "stage": {
+          "description": "Telltale ObservationStage::as_str(); must be valid for the family.",
+          "enum": ["observed", "requested", "started", "completed", "failed", "proposed", "execution_started", "execution_completed", "result_returned", "changed", "inventory_changed", "opened", "updated", "closed"]
+        },
+        "occurred_at": { "$ref": "#/$defs/timestamp" },
+        "tool_name": { "$ref": "#/$defs/label" },
+        "facts": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "text"],
+            "properties": {
+              "field": { "enum": ["command", "arguments", "file_path", "user_message", "assistant_message"] },
+              "text": { "type": "string", "minLength": 1, "maxLength": 4096 }
+            }
+          }
+        }
+      }
+    },
+    "context": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["offset", "kind", "stage"],
+        "properties": {
+          "offset": { "type": "integer", "minimum": -32, "maximum": 32, "not": { "const": 0 } },
+          "kind": { "enum": ["user_message", "assistant_message", "tool_call"] },
+          "stage": { "enum": ["observed", "proposed", "requested", "execution_started", "execution_completed"] },
+          "occurred_at": { "$ref": "#/$defs/timestamp" },
+          "tool_name": { "$ref": "#/$defs/label" },
+          "text": { "type": "string", "minLength": 1, "maxLength": 512 }
+        }
+      }
+    },
+    "native_findings": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "detector_id", "category", "severity"],
+        "properties": {
+          "finding_id": { "type": "string", "pattern": "^fnd:v2:sha256:[0-9a-f]{64}$" },
+          "detector_id": { "$ref": "#/$defs/detector_id" },
+          "category": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "severity": { "$ref": "#/$defs/severity" },
+          "risk_points": { "type": "integer", "minimum": 0, "maximum": 100 }
+        }
+      }
+    },
+    "visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disclosure", "redaction"],
+      "properties": {
+        "source": { "$ref": "#/$defs/label" },
+        "coverage": { "enum": ["whole_source", "partial"] },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "tool_call": { "$ref": "#/$defs/availability" },
+            "tool_execution": { "$ref": "#/$defs/availability" },
+            "user_context": { "$ref": "#/$defs/availability" }
+          }
+        },
+        "disclosure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["user_text", "assistant_text", "tool_arguments"],
+          "properties": {
+            "user_text": { "type": "boolean" },
+            "assistant_text": { "type": "boolean" },
+            "tool_arguments": { "type": "boolean" }
+          }
+        },
+        "redaction": { "const": "telltale.redact_sensitive_text" }
+      }
+    }
+  },
+  "$defs": {
+    "observation_id": { "type": "string", "pattern": "^obs:v2:sha256:[0-9a-f]{64}$" },
+    "detector_id": { "type": "string", "pattern": "^[a-z0-9._-]{1,96}$" },
+    "label": { "type": "string", "pattern": "^[A-Za-z0-9._:\\[\\]-]{1,96}$" },
+    "timestamp": { "type": "string", "pattern": "^[0-9TZ:.+-]{10,64}$" },
+    "severity": { "enum": ["informational", "low", "medium", "high", "critical"] },
+    "availability": { "enum": ["supported", "unsupported", "unknown"] }
+  }
+}
