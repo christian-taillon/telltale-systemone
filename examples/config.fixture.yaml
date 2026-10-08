@@ -1,0 +1,7 @@
+# Offline: answers come from fixture-answers.json; nothing leaves the host.
+schema: telltale-systemone.config.v1
+model: jev-1.13.0
+packs: [../packs/core.yaml]
+provider:
+  kind: fixture
+  path: fixture-answers.json

@@ -1,0 +1,12 @@
+# Live: sends the projected state to TypeSafe System One. Review what leaves
+# the host first with `evaluate --print-requests`.
+schema: telltale-systemone.config.v1
+model: jev-1.13.0
+packs: [../packs/core.yaml]
+provider:
+  kind: typesafe
+  endpoint: https://api.typesafe.ai/v1/systemone
+  api_key_env: TYPESAFE_API_KEY
+  timeout_ms: 10000
+  max_attempts: 3
+default_deadline_ms: 20000

@@ -1,0 +1,467 @@
+{
+ "note": "Synthetic answers written by hand for tests and examples. Not recorded from Jev; they show decision behaviour, not model quality.",
+ "model": "jev-1.13.0",
+ "subjects": {
+  "obs:v2:sha256:bd89bc784011981b373f0337ea65b0436a1d6133f9e4dbda3536f3486d30d7d1": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.05
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.03
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "unclear",
+    "probabilities": {
+     "not_an_install": 0.076,
+     "registry_package": 0.076,
+     "lockfile_or_pinned": 0.076,
+     "direct_url_or_vcs": 0.076,
+     "piped_script": 0.076,
+     "unclear": 0.62
+    },
+    "confidence": 0.544
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "unclear",
+    "probabilities": {
+     "not_an_install": 0.076,
+     "registry_package": 0.076,
+     "lockfile_or_pinned": 0.076,
+     "direct_url_or_vcs": 0.076,
+     "piped_script": 0.076,
+     "unclear": 0.62
+    },
+    "confidence": 0.544
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 0.5,
+    "probabilities": {
+     "0": 0.55,
+     "1": 0.4,
+     "2": 0.05,
+     "3": 0.0
+    },
+    "confidence": 0.6667
+   },
+   "systemone.intent.scope_mismatch": {
+    "type": "choice",
+    "choice": "reasonable_extra",
+    "probabilities": {
+     "requested": 0.1333,
+     "reasonable_extra": 0.6,
+     "outside_request": 0.1333,
+     "no_request_visible": 0.1333
+    },
+    "confidence": 0.4667
+   },
+   "systemone.intent.scope_mismatch~reordered": {
+    "type": "choice",
+    "choice": "reasonable_extra",
+    "probabilities": {
+     "requested": 0.1333,
+     "reasonable_extra": 0.6,
+     "outside_request": 0.1333,
+     "no_request_visible": 0.1333
+    },
+    "confidence": 0.4667
+   }
+  },
+  "obs:v2:sha256:91c75866ede9ecf9822ee5c95bac234e58fc997af7db3e31ed38a74ed21095bb": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.1
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.97
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.95,
+     "registry_package": 0.01,
+     "lockfile_or_pinned": 0.01,
+     "direct_url_or_vcs": 0.01,
+     "piped_script": 0.01,
+     "unclear": 0.01
+    },
+    "confidence": 0.94
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.95,
+     "registry_package": 0.01,
+     "lockfile_or_pinned": 0.01,
+     "direct_url_or_vcs": 0.01,
+     "piped_script": 0.01,
+     "unclear": 0.01
+    },
+    "confidence": 0.94
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 2.7,
+    "probabilities": {
+     "0": 0.0,
+     "1": 0.05,
+     "2": 0.2,
+     "3": 0.75
+    },
+    "confidence": 0.8
+   },
+   "systemone.intent.scope_mismatch": {
+    "type": "choice",
+    "choice": "outside_request",
+    "probabilities": {
+     "requested": 0.0667,
+     "reasonable_extra": 0.0667,
+     "outside_request": 0.8,
+     "no_request_visible": 0.0667
+    },
+    "confidence": 0.7333
+   },
+   "systemone.intent.scope_mismatch~reordered": {
+    "type": "choice",
+    "choice": "outside_request",
+    "probabilities": {
+     "requested": 0.0667,
+     "reasonable_extra": 0.0667,
+     "outside_request": 0.8,
+     "no_request_visible": 0.0667
+    },
+    "confidence": 0.7333
+   }
+  },
+  "obs:v2:sha256:8cd400e78d33632c3f49a64c36fdcba0d2c9e5bb86f71075029a5566537eeee2": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.94
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.12
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.85,
+     "registry_package": 0.03,
+     "lockfile_or_pinned": 0.03,
+     "direct_url_or_vcs": 0.03,
+     "piped_script": 0.03,
+     "unclear": 0.03
+    },
+    "confidence": 0.82
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.85,
+     "registry_package": 0.03,
+     "lockfile_or_pinned": 0.03,
+     "direct_url_or_vcs": 0.03,
+     "piped_script": 0.03,
+     "unclear": 0.03
+    },
+    "confidence": 0.82
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 1.6,
+    "probabilities": {
+     "0": 0.05,
+     "1": 0.35,
+     "2": 0.55,
+     "3": 0.05
+    },
+    "confidence": 0.5
+   },
+   "systemone.intent.scope_mismatch": {
+    "type": "choice",
+    "choice": "outside_request",
+    "probabilities": {
+     "requested": 0.1,
+     "reasonable_extra": 0.1,
+     "outside_request": 0.7,
+     "no_request_visible": 0.1
+    },
+    "confidence": 0.6
+   },
+   "systemone.intent.scope_mismatch~reordered": {
+    "type": "choice",
+    "choice": "reasonable_extra",
+    "probabilities": {
+     "requested": 0.15,
+     "reasonable_extra": 0.55,
+     "outside_request": 0.15,
+     "no_request_visible": 0.15
+    },
+    "confidence": 0.4
+   }
+  },
+  "obs:v2:sha256:74bc7f459002456408627754cef8ad39c52f0c6f6c558fd79f9ce60a9fa08bc7": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.04
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.91
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.95,
+     "registry_package": 0.01,
+     "lockfile_or_pinned": 0.01,
+     "direct_url_or_vcs": 0.01,
+     "piped_script": 0.01,
+     "unclear": 0.01
+    },
+    "confidence": 0.94
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.95,
+     "registry_package": 0.01,
+     "lockfile_or_pinned": 0.01,
+     "direct_url_or_vcs": 0.01,
+     "piped_script": 0.01,
+     "unclear": 0.01
+    },
+    "confidence": 0.94
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 1.9,
+    "probabilities": {
+     "0": 0.05,
+     "1": 0.2,
+     "2": 0.55,
+     "3": 0.2
+    },
+    "confidence": 0.5
+   },
+   "systemone.intent.scope_mismatch": {
+    "type": "choice",
+    "choice": "outside_request",
+    "probabilities": {
+     "requested": 0.0933,
+     "reasonable_extra": 0.0933,
+     "outside_request": 0.72,
+     "no_request_visible": 0.0933
+    },
+    "confidence": 0.6267
+   },
+   "systemone.intent.scope_mismatch~reordered": {
+    "type": "choice",
+    "choice": "outside_request",
+    "probabilities": {
+     "requested": 0.0933,
+     "reasonable_extra": 0.0933,
+     "outside_request": 0.72,
+     "no_request_visible": 0.0933
+    },
+    "confidence": 0.6267
+   }
+  },
+  "obs:v2:sha256:6662464f0bb83f779567af002a0f5a485fdf6d304e53e8a2909977a2bd46f72a": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.07
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.05
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "direct_url_or_vcs",
+    "probabilities": {
+     "not_an_install": 0.04,
+     "registry_package": 0.04,
+     "lockfile_or_pinned": 0.04,
+     "direct_url_or_vcs": 0.8,
+     "piped_script": 0.04,
+     "unclear": 0.04
+    },
+    "confidence": 0.76
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "direct_url_or_vcs",
+    "probabilities": {
+     "not_an_install": 0.04,
+     "registry_package": 0.04,
+     "lockfile_or_pinned": 0.04,
+     "direct_url_or_vcs": 0.8,
+     "piped_script": 0.04,
+     "unclear": 0.04
+    },
+    "confidence": 0.76
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 1.1,
+    "probabilities": {
+     "0": 0.15,
+     "1": 0.6,
+     "2": 0.25,
+     "3": 0.0
+    },
+    "confidence": 0.6
+   },
+   "systemone.intent.scope_mismatch": {
+    "type": "choice",
+    "choice": "requested",
+    "probabilities": {
+     "requested": 0.7,
+     "reasonable_extra": 0.1,
+     "outside_request": 0.1,
+     "no_request_visible": 0.1
+    },
+    "confidence": 0.6
+   },
+   "systemone.intent.scope_mismatch~reordered": {
+    "type": "choice",
+    "choice": "requested",
+    "probabilities": {
+     "requested": 0.7,
+     "reasonable_extra": 0.1,
+     "outside_request": 0.1,
+     "no_request_visible": 0.1
+    },
+    "confidence": 0.6
+   }
+  },
+  "obs:v2:sha256:8b628c9d543416d0297d391b3280234b307c56414ff55c22b499d71ecb6c3988": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.01
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.01
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.96,
+     "registry_package": 0.008,
+     "lockfile_or_pinned": 0.008,
+     "direct_url_or_vcs": 0.008,
+     "piped_script": 0.008,
+     "unclear": 0.008
+    },
+    "confidence": 0.952
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.96,
+     "registry_package": 0.008,
+     "lockfile_or_pinned": 0.008,
+     "direct_url_or_vcs": 0.008,
+     "piped_script": 0.008,
+     "unclear": 0.008
+    },
+    "confidence": 0.952
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 0.05,
+    "probabilities": {
+     "0": 0.95,
+     "1": 0.05,
+     "2": 0.0,
+     "3": 0.0
+    },
+    "confidence": 0.9667
+   },
+   "systemone.intent.scope_mismatch": {
+    "type": "choice",
+    "choice": "requested",
+    "probabilities": {
+     "requested": 0.9,
+     "reasonable_extra": 0.0333,
+     "outside_request": 0.0333,
+     "no_request_visible": 0.0333
+    },
+    "confidence": 0.8667
+   },
+   "systemone.intent.scope_mismatch~reordered": {
+    "type": "choice",
+    "choice": "requested",
+    "probabilities": {
+     "requested": 0.9,
+     "reasonable_extra": 0.0333,
+     "outside_request": 0.0333,
+     "no_request_visible": 0.0333
+    },
+    "confidence": 0.8667
+   }
+  },
+  "obs:v2:sha256:e439002bca435245c6d3ec2643d3dc89d0cdd9f5a322554627bed1f902419295": {
+   "systemone.persistence.autostart_change": {
+    "type": "noul",
+    "noul": 0.9
+   },
+   "systemone.defense_evasion.control_tampering": {
+    "type": "noul",
+    "noul": 0.1
+   },
+   "systemone.install.package_source": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.9,
+     "registry_package": 0.02,
+     "lockfile_or_pinned": 0.02,
+     "direct_url_or_vcs": 0.02,
+     "piped_script": 0.02,
+     "unclear": 0.02
+    },
+    "confidence": 0.88
+   },
+   "systemone.install.package_source~reordered": {
+    "type": "choice",
+    "choice": "not_an_install",
+    "probabilities": {
+     "not_an_install": 0.9,
+     "registry_package": 0.02,
+     "lockfile_or_pinned": 0.02,
+     "direct_url_or_vcs": 0.02,
+     "piped_script": 0.02,
+     "unclear": 0.02
+    },
+    "confidence": 0.88
+   },
+   "systemone.execution.action_risk": {
+    "type": "score",
+    "score": 1.55,
+    "probabilities": {
+     "0": 0.05,
+     "1": 0.4,
+     "2": 0.5,
+     "3": 0.05
+    },
+    "confidence": 0.45
+   }
+  }
+ }
+}
