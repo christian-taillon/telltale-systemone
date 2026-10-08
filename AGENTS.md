@@ -2,8 +2,18 @@
 
 Reference `analyzer.v1` extension for Telltale. Keep it small and honest.
 
-- Telltale (`../telltale`) is read-only from here. Do not edit it. Its host-side
-  work needs accepted scope there; record proposals in `docs/telltale-host.md`.
+- Telltale (`../telltale`, a sibling checkout) may be edited from here when the
+  change is within Telltale's accepted scope and follows Telltale's `AGENTS.md`.
+  Keep context where it belongs: Telltale changes stay generic (`analyzer.v1`,
+  canonical observations, selectors), with no plugin names, paths, or
+  dependencies in its code, schemas, tests, or docs. Plugin-specific rationale
+  stays in this repository.
+- Dependency direction is one-way. Telltale never depends on
+  telltale-systemone or on any other plugin. Plugins depend on Telltale's public
+  contracts only. Put this repo's name in Telltale only if Telltale itself needs
+  to refer to a plugin, and that should not happen.
+- Record Telltale host-side proposals in `docs/telltale-host.md` and keep them
+  as direction until Telltale accepts the scope.
 - The wire contract is `src/protocol.rs` + `schemas/`. Change both together,
   and bump the schema string for any incompatible change.
 - Changing state layout, the evidence note, or question encoding means
