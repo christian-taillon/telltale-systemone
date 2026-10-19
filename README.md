@@ -29,6 +29,8 @@ identities, Findings, policy, and telemetry.
 
 The analyzer is not an integrated Telltale feature. Telltale does not run it today.
 
+[Agent Archaeology](https://agentarchaeology.ai/) explains the evidence and trust-boundary context. This repository does not integrate with it.
+
 ## What it checks
 
 [`packs/core.yaml`](packs/core.yaml) has five checks, each with one question:
@@ -163,7 +165,7 @@ docs/           protocol, guard packs, Telltale host contract
 
 ## Related
 
-- [Telltale](https://github.com/Dark-Roast-Cyber/telltale): detection and telemetry host
+- [Telltale](https://github.com/Dark-Roast-Cyber/telltale): detection and telemetry host; start at its [documentation map](https://github.com/Dark-Roast-Cyber/telltale/blob/main/docs/README.md)
 - [Agent Archaeology](https://agentarchaeology.ai/): research on agent traces and evidence
 - [Token Guard](https://christiant.io/token_guard): deterministic sensitive-data detection
 - [TypeSafe docs](https://docs.typesafe.ai/llms.txt): System One primitives, confidence, [Jev 1.13 jaggedness](https://docs.typesafe.ai/model-jaggedness/jev-1.13.md)
