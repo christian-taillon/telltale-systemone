@@ -16,20 +16,21 @@ The model supplies only probabilities. The pack supplies the Telltale category,
 severity, risk points, and every threshold. Telltale keeps acquisition, privacy,
 identities, Findings, policy, and telemetry.
 
+Explore the [analyzer](src/analyzer.rs), [guard packs](packs/), [wire schemas](schemas/),
+[synthetic examples](examples/), and [tests](tests/).
+
 ## Status
 
 | Area | Label |
 | --- | --- |
-| `analyzer.v1` plugin: protocol, guard packs, decisions, fixture and HTTP providers | **Current experiment**: built and tested here (24 tests) |
-| Telltale host side (spawn, validate, convert to `DetectorResult`) | **Proposed extension**: not in Telltale. Telltale's development principles (`docs/development-principles.md`, "Analyzer extensions") record it as direction, not accepted scope (unpublished branch `prep/0.7-embedding-contract`, not yet on `main`). [`host_check`](src/host_check.rs) is the executable form of the proposed host rules. |
+| `analyzer.v1` plugin: protocol, guard packs, decisions, fixture and HTTP providers | **Current experiment**: implementation and tests are in this repository |
+| Telltale host side (spawn, validate, convert to `DetectorResult`) | **Proposed extension**, not integrated. Telltale's [development principles](https://github.com/Dark-Roast-Cyber/telltale/blob/main/docs/development-principles.md#analyzer-extensions-direction-not-implemented) describe the direction; [`host_check`](src/host_check.rs) implements the proposed validation locally. |
 | Bridge from real Telltale output | **Validated observation**: [`bridge/`](bridge/) uses only the public `telltale-core` embedding API (0.7.0-rc.2) |
 | Live calls to TypeSafe | **Validated observation** (2026-10-07): all 8 synthetic example inputs ran live against `jev-1.13.0`, with strict answer validation, model pin confirmed, and about 2.5k input tokens per action. Not yet run on real sessions. See [Live run](#live-run-synthetic-inputs). |
 | `core` pack thresholds | **Draft**: starting points from TypeSafe guidance, not tuned on labeled sessions |
 | Deeper visibility (unflagged actions, system prompts, agent role, runtime, tool results) | **Proposed extension**: draft Telltale task series, not accepted. See [what a check can see today](docs/telltale-host.md#what-a-check-can-see-today). |
 
 The analyzer is not an integrated Telltale feature. Telltale does not run it today.
-
-[Agent Archaeology](https://agentarchaeology.ai/) explains the evidence and trust-boundary context. This repository does not integrate with it.
 
 ## What it checks
 
@@ -154,18 +155,16 @@ hand-written; these live answers were not saved as fixtures.
 
 ## Layout
 
-```text
-src/            protocol, pack loader, state builder, decisions, providers, serve loop, host checks
-packs/          guard packs
-schemas/        JSON Schemas for the wire contract (draft)
-examples/       configs, Mode A (bridge) and Mode B (hand-written) inputs, synthetic answers
-bridge/         Telltale ActionFinding -> AnalysisInputV1 (optional, path dependency)
-docs/           protocol, guard packs, Telltale host contract
-```
+- [`src/`](src/) — protocol, decisions, providers, and host checks
+- [`packs/`](packs/) — guard packs
+- [`schemas/`](schemas/) — draft wire-contract schemas
+- [`examples/`](examples/) — synthetic inputs, answers, and configuration
+- [`bridge/`](bridge/) — optional Telltale public-API adapter
+- [`docs/`](docs/) — protocol, guard packs, and proposed host contract
 
 ## Related
 
-- [Telltale](https://github.com/Dark-Roast-Cyber/telltale): detection and telemetry host; start at its [documentation map](https://github.com/Dark-Roast-Cyber/telltale/blob/main/docs/README.md)
+- [Telltale](https://github.com/Dark-Roast-Cyber/telltale): deterministic detection and telemetry
 - [Agent Archaeology](https://agentarchaeology.ai/): research on agent traces and evidence
 - [Token Guard](https://christiant.io/token_guard): deterministic sensitive-data detection
 - [TypeSafe docs](https://docs.typesafe.ai/llms.txt): System One primitives, confidence, [Jev 1.13 jaggedness](https://docs.typesafe.ai/model-jaggedness/jev-1.13.md)
